@@ -1,0 +1,28 @@
+.wrap {
+  max-width: 26rem;
+  margin: clamp(4rem, 14vw, 9rem) auto;
+}
+
+.title {
+  font-size: clamp(1.8rem, 5vw, 2.6rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+.copy {
+  margin-top: 1rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.form {
+  margin-top: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.error {
+  color: #9a3412;
+  font-size: 0.9rem;
+}

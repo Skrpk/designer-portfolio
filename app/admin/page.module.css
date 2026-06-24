@@ -1,0 +1,47 @@
+.wrap {
+  max-width: 38rem;
+  margin: clamp(3rem, 10vw, 6rem) auto 6rem;
+}
+
+.header {
+  margin-bottom: 2.5rem;
+}
+
+.title {
+  font-size: clamp(1.8rem, 5vw, 2.8rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+.copy {
+  margin-top: 1rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.fileList {
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.statusMessage {
+  font-size: 0.9rem;
+  color: var(--fg);
+}
+
+.error {
+  font-size: 0.9rem;
+  color: #9a3412;
+}
+
+.inlineLink {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}

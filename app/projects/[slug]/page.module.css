@@ -1,0 +1,49 @@
+.back {
+  display: inline-block;
+  margin-top: 2.5rem;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+}
+
+.back:hover {
+  color: var(--fg);
+}
+
+.header {
+  padding: clamp(2.5rem, 8vw, 6rem) 0 clamp(2rem, 5vw, 4rem);
+  max-width: 50rem;
+}
+
+.title {
+  font-size: clamp(2rem, 6vw, 4.5rem);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.description {
+  margin-top: 1.5rem;
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  line-height: 1.6;
+  color: #3a382f;
+  white-space: pre-wrap;
+}
+
+.gallery {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1rem, 3vw, 2.5rem);
+  padding-bottom: 2rem;
+}
+
+.imageWrap {
+  width: 100%;
+  background: #e7e4dd;
+}
+
+.image {
+  width: 100%;
+  height: auto;
+}

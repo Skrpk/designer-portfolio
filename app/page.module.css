@@ -1,0 +1,113 @@
+.intro {
+  padding: clamp(4rem, 12vw, 10rem) 0 clamp(3rem, 8vw, 6rem);
+  max-width: 60rem;
+}
+
+.lead {
+  font-size: clamp(1.8rem, 5vw, 3.6rem);
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.subhead {
+  margin-top: 2rem;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+}
+
+.empty {
+  padding: 4rem 0 8rem;
+  color: var(--muted);
+  font-size: 1.1rem;
+}
+
+.inlineLink {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--line);
+}
+
+.row {
+  border-bottom: 1px solid var(--line);
+}
+
+.link {
+  position: relative;
+  display: grid;
+  grid-template-columns: 4rem 1fr auto;
+  align-items: center;
+  gap: 1.5rem;
+  padding: clamp(1.25rem, 3vw, 2.25rem) 0;
+  transition: padding-left 0.3s ease, color 0.3s ease;
+}
+
+.link:hover {
+  padding-left: 1.5rem;
+}
+
+.index {
+  font-size: 0.85rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.name {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: clamp(1.4rem, 3.5vw, 2.4rem);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.lock {
+  font-size: 0.9rem;
+}
+
+.meta {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+}
+
+/* CSS-only hover image reveal */
+.preview {
+  pointer-events: none;
+  position: absolute;
+  right: 6rem;
+  top: 50%;
+  width: 16rem;
+  height: 11rem;
+  transform: translateY(-50%) scale(0.96);
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 5;
+}
+
+.link:hover .preview {
+  opacity: 1;
+  transform: translateY(-50%) scale(1);
+}
+
+@media (max-width: 768px) {
+  .link {
+    grid-template-columns: 2.5rem 1fr auto;
+    gap: 1rem;
+  }
+
+  .preview {
+    display: none;
+  }
+}
