@@ -8,7 +8,7 @@ A server-rendered portfolio site for an interior designer, built with Next.js (A
 - Public and private projects.
 - Private projects are gated behind a shared password; entering it sets a signed, httpOnly cookie valid for 1 hour that unlocks all private projects.
 - Admin page (HTTP Basic Auth) to create projects: name, description, visibility, and multiple images.
-- Images upload directly from the browser to Vercel Blob (supports large files); metadata is saved to `data/projects.json` in Blob.
+- Images are uploaded through a server route (`/api/blob/upload`) which stores them in Vercel Blob; metadata is saved to `data/projects.json` in Blob.
 - Server-side rendering throughout.
 
 ## Tech
@@ -26,7 +26,7 @@ A server-rendered portfolio site for an interior designer, built with Next.js (A
 | `/unlock` | Password entry for private projects |
 | `/admin` | Create-project form (HTTP Basic Auth) |
 | `/api/auth/verify` | Verifies the private password and sets the access cookie |
-| `/api/blob/upload` | Issues client-upload tokens for Vercel Blob (Basic Auth) |
+| `/api/blob/upload` | Receives an image file and uploads it to Vercel Blob (Basic Auth) |
 | `/api/admin/projects` | Persists project metadata (Basic Auth) |
 
 ## Environment variables

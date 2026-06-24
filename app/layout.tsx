@@ -21,7 +21,6 @@ export default function RootLayout({
           </Link>
           <nav>
             <Link href="/">Work</Link>
-            <Link href="/admin">Admin</Link>
           </nav>
         </header>
         <main>{children}</main>

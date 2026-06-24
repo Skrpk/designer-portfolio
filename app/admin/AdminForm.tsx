@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { upload } from "@vercel/blob/client";
 import styles from "./page.module.css";
 
 type Status = "idle" | "working" | "done" | "error";
@@ -31,10 +30,19 @@ export default function AdminForm() {
       for (let i = 0; i < files.length; i++) {
         const file = files[i];
         setMessage(`Uploading image ${i + 1} of ${files.length}…`);
-        const blob = await upload(file.name, file, {
-          access: "public",
-          handleUploadUrl: "/api/blob/upload",
+        const uploadData = new FormData();
+        uploadData.append("file", file);
+        const uploadRes = await fetch("/api/blob/upload", {
+          method: "POST",
+          body: uploadData,
         });
+        if (!uploadRes.ok) {
+          const data = (await uploadRes.json().catch(() => ({}))) as {
+            error?: string;
+          };
+          throw new Error(data.error ?? `Failed to upload ${file.name}.`);
+        }
+        const blob = (await uploadRes.json()) as { url: string };
         urls.push(blob.url);
       }
 
