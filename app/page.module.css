@@ -80,25 +80,26 @@
   color: var(--muted);
 }
 
-/* CSS-only hover image reveal */
+/* Always-visible thumbnail that enlarges on hover */
 .preview {
   pointer-events: none;
   position: absolute;
   right: 6rem;
   top: 50%;
-  width: 16rem;
-  height: 11rem;
-  transform: translateY(-50%) scale(0.96);
+  width: 8rem;
+  height: 5.5rem;
+  transform: translateY(-50%) scale(1);
+  transform-origin: center right;
   background-size: cover;
   background-position: center;
-  opacity: 0;
+  opacity: 0.85;
   transition: opacity 0.3s ease, transform 0.3s ease;
   z-index: 5;
 }
 
 .link:hover .preview {
   opacity: 1;
-  transform: translateY(-50%) scale(1);
+  transform: translateY(-50%) scale(2);
 }
 
 @media (max-width: 768px) {
