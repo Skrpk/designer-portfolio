@@ -1,4 +1,4 @@
-import { list, put } from "@vercel/blob";
+import { del, list, put } from "@vercel/blob";
 
 const DATA_PATHNAME = "data/projects.json";
 
@@ -17,6 +17,13 @@ export interface Project {
 }
 
 export interface NewProjectInput {
+  name: string;
+  description: string;
+  visibility: Visibility;
+  images: string[];
+}
+
+export interface UpdateProjectInput {
   name: string;
   description: string;
   visibility: Visibility;
@@ -65,6 +72,20 @@ export async function getProjectBySlug(
   return projects.find((p) => p.slug === slug) ?? null;
 }
 
+export async function getProjectById(id: string): Promise<Project | null> {
+  const projects = await getProjects();
+  return projects.find((p) => p.id === id) ?? null;
+}
+
+async function deleteBlobs(urls: string[]): Promise<void> {
+  if (urls.length === 0) return;
+  try {
+    await del(urls);
+  } catch {
+    // Ignore cleanup failures so the metadata update still succeeds.
+  }
+}
+
 async function saveProjects(projects: Project[]): Promise<void> {
   await put(DATA_PATHNAME, JSON.stringify(projects, null, 2), {
     access: "public",
@@ -102,4 +123,44 @@ export async function createProject(
   projects.push(project);
   await saveProjects(projects);
   return project;
+}
+
+export async function updateProject(
+  id: string,
+  input: UpdateProjectInput
+): Promise<Project | null> {
+  const projects = await getProjects();
+  const index = projects.findIndex((p) => p.id === id);
+  if (index === -1) return null;
+
+  const current = projects[index];
+
+  const removedImages = current.images.filter(
+    (url) => !input.images.includes(url)
+  );
+
+  const updated: Project = {
+    ...current,
+    name: input.name.trim(),
+    description: input.description.trim(),
+    visibility: input.visibility,
+    images: input.images,
+    cover: input.images[0] ?? null,
+  };
+
+  projects[index] = updated;
+  await saveProjects(projects);
+  await deleteBlobs(removedImages);
+  return updated;
+}
+
+export async function deleteProject(id: string): Promise<boolean> {
+  const projects = await getProjects();
+  const index = projects.findIndex((p) => p.id === id);
+  if (index === -1) return false;
+
+  const [removed] = projects.splice(index, 1);
+  await saveProjects(projects);
+  await deleteBlobs(removed.images);
+  return true;
 }

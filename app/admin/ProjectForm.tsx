@@ -1,18 +1,32 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import type { Project } from "@/lib/projects";
 import styles from "./page.module.css";
 
 type Status = "idle" | "working" | "done" | "error";
 
-export default function AdminForm() {
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [visibility, setVisibility] = useState<"public" | "private">("public");
+export default function ProjectForm({ project }: { project?: Project }) {
+  const isEdit = Boolean(project);
+  const router = useRouter();
+
+  const [name, setName] = useState(project?.name ?? "");
+  const [description, setDescription] = useState(project?.description ?? "");
+  const [visibility, setVisibility] = useState<"public" | "private">(
+    project?.visibility ?? "public"
+  );
+  const [existingImages, setExistingImages] = useState<string[]>(
+    project?.images ?? []
+  );
   const [files, setFiles] = useState<File[]>([]);
   const [status, setStatus] = useState<Status>("idle");
   const [message, setMessage] = useState("");
-  const [createdSlug, setCreatedSlug] = useState<string | null>(null);
+  const [resultSlug, setResultSlug] = useState<string | null>(null);
+
+  function removeExistingImage(url: string) {
+    setExistingImages((prev) => prev.filter((u) => u !== url));
+  }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -23,10 +37,10 @@ export default function AdminForm() {
     }
 
     setStatus("working");
-    setCreatedSlug(null);
+    setResultSlug(null);
 
     try {
-      const urls: string[] = [];
+      const uploadedUrls: string[] = [];
       for (let i = 0; i < files.length; i++) {
         const file = files[i];
         setMessage(`Uploading image ${i + 1} of ${files.length}…`);
@@ -43,19 +57,19 @@ export default function AdminForm() {
           throw new Error(data.error ?? `Failed to upload ${file.name}.`);
         }
         const blob = (await uploadRes.json()) as { url: string };
-        urls.push(blob.url);
+        uploadedUrls.push(blob.url);
       }
 
+      const images = [...existingImages, ...uploadedUrls];
+
       setMessage("Saving project…");
-      const res = await fetch("/api/admin/projects", {
-        method: "POST",
+      const endpoint = isEdit
+        ? `/api/admin/projects/${project!.id}`
+        : "/api/admin/projects";
+      const res = await fetch(endpoint, {
+        method: isEdit ? "PUT" : "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name,
-          description,
-          visibility,
-          images: urls,
-        }),
+        body: JSON.stringify({ name, description, visibility, images }),
       });
 
       if (!res.ok) {
@@ -67,12 +81,22 @@ export default function AdminForm() {
 
       const data = (await res.json()) as { slug: string };
       setStatus("done");
-      setMessage("Project created.");
-      setCreatedSlug(data.slug);
-      setName("");
-      setDescription("");
-      setVisibility("public");
-      setFiles([]);
+      setResultSlug(data.slug);
+
+      if (isEdit) {
+        setMessage("Changes saved.");
+        setExistingImages(images);
+        setFiles([]);
+        router.refresh();
+      } else {
+        setMessage("Project created.");
+        setName("");
+        setDescription("");
+        setVisibility("public");
+        setExistingImages([]);
+        setFiles([]);
+        router.refresh();
+      }
     } catch (err) {
       setStatus("error");
       setMessage((err as Error).message);
@@ -120,8 +144,33 @@ export default function AdminForm() {
         </select>
       </div>
 
+      {existingImages.length > 0 && (
+        <div>
+          <label>Current images</label>
+          <div className={styles.thumbGrid}>
+            {existingImages.map((url) => (
+              <div key={url} className={styles.thumb}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={url} alt="" className={styles.thumbImg} />
+                <button
+                  type="button"
+                  className={styles.thumbRemove}
+                  onClick={() => removeExistingImage(url)}
+                  disabled={working}
+                  aria-label="Remove image"
+                >
+                  ×
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
       <div>
-        <label htmlFor="images">Images</label>
+        <label htmlFor="images">
+          {isEdit ? "Add images" : "Images"}
+        </label>
         <input
           id="images"
           type="file"
@@ -132,26 +181,28 @@ export default function AdminForm() {
         />
         {files.length > 0 && (
           <p className={styles.fileList}>
-            {files.length} file{files.length > 1 ? "s" : ""} selected
+            {files.length} new file{files.length > 1 ? "s" : ""} selected
           </p>
         )}
       </div>
 
       <button type="submit" className="btn" disabled={working}>
-        {working ? "Working…" : "Create project"}
+        {working
+          ? "Working…"
+          : isEdit
+          ? "Save changes"
+          : "Create project"}
       </button>
 
       {message && (
         <p
-          className={
-            status === "error" ? styles.error : styles.statusMessage
-          }
+          className={status === "error" ? styles.error : styles.statusMessage}
         >
           {message}{" "}
-          {status === "done" && createdSlug && (
+          {status === "done" && resultSlug && (
             <a
               className={styles.inlineLink}
-              href={`/projects/${createdSlug}`}
+              href={`/projects/${resultSlug}`}
             >
               View project →
             </a>
