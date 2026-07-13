@@ -1,21 +1,13 @@
-.intro {
-  padding: clamp(4rem, 12vw, 10rem) 0 clamp(3rem, 8vw, 6rem);
-  max-width: 60rem;
-}
-
-.lead {
-  font-size: clamp(1.8rem, 5vw, 3.6rem);
-  font-weight: 500;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-}
-
-.subhead {
-  margin-top: 2rem;
-  font-size: 0.85rem;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--muted);
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 .empty {
@@ -29,86 +21,139 @@
   text-underline-offset: 3px;
 }
 
-.list {
+.grid {
   list-style: none;
   margin: 0;
-  padding: 0;
-  border-top: 1px solid var(--line);
-}
-
-.row {
-  border-bottom: 1px solid var(--line);
-}
-
-.link {
-  position: relative;
+  padding: 2rem 0 4rem;
   display: grid;
-  grid-template-columns: 4rem 1fr auto;
-  align-items: center;
-  gap: 1.5rem;
-  padding: clamp(1.25rem, 3vw, 2.25rem) 0;
-  transition: padding-left 0.3s ease, color 0.3s ease;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
 }
 
-.link:hover {
-  padding-left: 1.5rem;
+.card {
+  margin: 0;
 }
 
-.index {
-  font-size: 0.85rem;
-  color: var(--muted);
-  font-variant-numeric: tabular-nums;
+.cardLink {
+  display: block;
+}
+
+.imageWrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 580 / 433;
+  /* aspect-ratio: 433 / 580; */
+  overflow: hidden;
+  background: #e7e4dd;
+}
+
+.image {
+  object-fit: cover;
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.placeholder {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    45deg,
+    #e7e4dd,
+    #e7e4dd 12px,
+    #ddd9d1 12px,
+    #ddd9d1 24px
+  );
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  padding: clamp(1rem, 2vw, 1.75rem);
+  background: linear-gradient(
+    to top,
+    rgba(20, 19, 15, 0.72) 0%,
+    rgba(20, 19, 15, 0.25) 45%,
+    rgba(20, 19, 15, 0) 75%
+  );
+  opacity: 0;
+  transition: opacity 0.45s ease;
+}
+
+.caption {
+  transform: translateY(12px);
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  color: #fff;
 }
 
 .name {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  font-size: clamp(1.4rem, 3.5vw, 2.4rem);
+  display: block;
+  font-size: clamp(1.1rem, 1.6vw, 1.5rem);
   font-weight: 500;
   letter-spacing: -0.01em;
-}
-
-.lock {
-  font-size: 0.9rem;
+  line-height: 1.15;
 }
 
 .meta {
-  font-size: 0.8rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 0.5rem;
+  font-size: 0.72rem;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--muted);
+  letter-spacing: 0.14em;
+  color: rgba(255, 255, 255, 0.8);
 }
 
-/* Always-visible thumbnail that enlarges on hover */
-.preview {
-  pointer-events: none;
-  position: absolute;
-  right: 6rem;
-  top: 50%;
-  width: 8rem;
-  height: 5.5rem;
-  transform: translateY(-50%) scale(1);
-  transform-origin: center right;
-  background-size: cover;
-  background-position: center;
-  opacity: 0.85;
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  z-index: 5;
+/* Hover / focus effects */
+.cardLink:hover .image,
+.cardLink:focus-visible .image,
+.cardLink:hover .video,
+.cardLink:focus-visible .video {
+  transform: scale(1.06);
 }
 
-.link:hover .preview {
+.cardLink:hover .overlay,
+.cardLink:focus-visible .overlay {
   opacity: 1;
-  transform: translateY(-50%) scale(2);
 }
 
-@media (max-width: 768px) {
-  .link {
-    grid-template-columns: 2.5rem 1fr auto;
-    gap: 1rem;
+.cardLink:hover .caption,
+.cardLink:focus-visible .caption {
+  transform: translateY(0);
+}
+
+.cardLink:focus-visible {
+  outline: 2px solid var(--fg);
+  outline-offset: 3px;
+}
+
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .grid {
+    grid-template-columns: 1fr;
   }
 
-  .preview {
-    display: none;
+  /* Always show caption on touch screens where hover is unavailable */
+  .overlay {
+    opacity: 1;
+  }
+
+  .caption {
+    transform: none;
   }
 }

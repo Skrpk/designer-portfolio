@@ -1,5 +1,7 @@
 import Link from "next/link";
+import Image from "next/image";
 import { getProjects } from "@/lib/projects";
+import { isVideoUrl } from "@/lib/media";
 import styles from "./page.module.css";
 
 export const dynamic = "force-dynamic";
@@ -9,12 +11,7 @@ export default async function HomePage() {
 
   return (
     <div className="container">
-      <section className={styles.intro}>
-        <h1 className={styles.lead}>
-          Interior design studio shaping calm, considered spaces.
-        </h1>
-        <p className={styles.subhead}>Selected Work — {projects.length}</p>
-      </section>
+      <h1 className={styles.srOnly}>Selected work</h1>
 
       {projects.length === 0 ? (
         <p className={styles.empty}>
@@ -25,31 +22,53 @@ export default async function HomePage() {
           .
         </p>
       ) : (
-        <ul className={styles.list}>
-          {projects.map((project, index) => (
-            <li key={project.id} className={styles.row}>
-              <Link href={`/projects/${project.slug}`} className={styles.link}>
-                <span className={styles.index}>
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-                <span className={styles.name}>
-                  {project.name}
-                  {project.visibility === "private" && (
-                    <span className={styles.lock} aria-label="Private project">
-                      &#128274;
-                    </span>
+        <ul className={styles.grid}>
+          {projects.map((project) => (
+            <li key={project.id} className={styles.card}>
+              <Link
+                href={`/projects/${project.slug}`}
+                className={styles.cardLink}
+              >
+                <div className={styles.imageWrap}>
+                  {project.cover ? (
+                    isVideoUrl(project.cover) ? (
+                      <video
+                        src={project.cover}
+                        className={styles.video}
+                        muted
+                        loop
+                        autoPlay
+                        playsInline
+                        preload="metadata"
+                      />
+                    ) : (
+                      <Image
+                        src={project.cover}
+                        alt={project.name}
+                        fill
+                        className={styles.image}
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      />
+                    )
+                  ) : (
+                    <span className={styles.placeholder} aria-hidden="true" />
                   )}
-                </span>
-                <span className={styles.meta}>
-                  {project.visibility === "private" ? "Private" : "View"}
-                </span>
-                {project.cover && (
-                  <span
-                    className={styles.preview}
-                    style={{ backgroundImage: `url(${project.cover})` }}
-                    aria-hidden="true"
-                  />
-                )}
+
+                  <div className={styles.overlay}>
+                    <div className={styles.caption}>
+                      <span className={styles.name}>{project.name}</span>
+                      <span className={styles.meta}>
+                        {project.visibility === "private" ? (
+                          <>
+                            <span aria-hidden="true">&#128274;</span> Private
+                          </>
+                        ) : (
+                          "Public"
+                        )}
+                      </span>
+                    </div>
+                  </div>
+                </div>
               </Link>
             </li>
           ))}

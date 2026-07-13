@@ -60,17 +60,21 @@ p {
   top: 0;
   z-index: 10;
   display: flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
-  padding: 1.5rem var(--pad);
+  padding: 1rem var(--pad);
   background: var(--bg);
   border-bottom: 1px solid var(--line);
 }
 
 .site-header .brand {
-  font-size: 1.05rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
+  display: flex;
+  align-items: center;
+}
+
+.site-header .brand-logo {
+  height: 3.5rem;
+  width: auto;
 }
 
 .site-header nav {

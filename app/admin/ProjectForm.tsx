@@ -2,7 +2,9 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { upload } from "@vercel/blob/client";
 import type { Project } from "@/lib/projects";
+import { isVideoFile, isVideoUrl } from "@/lib/media";
 import styles from "./page.module.css";
 
 type Status = "idle" | "working" | "done" | "error";
@@ -43,21 +45,32 @@ export default function ProjectForm({ project }: { project?: Project }) {
       const uploadedUrls: string[] = [];
       for (let i = 0; i < files.length; i++) {
         const file = files[i];
-        setMessage(`Uploading image ${i + 1} of ${files.length}…`);
-        const uploadData = new FormData();
-        uploadData.append("file", file);
-        const uploadRes = await fetch("/api/blob/upload", {
-          method: "POST",
-          body: uploadData,
-        });
-        if (!uploadRes.ok) {
-          const data = (await uploadRes.json().catch(() => ({}))) as {
-            error?: string;
-          };
-          throw new Error(data.error ?? `Failed to upload ${file.name}.`);
+        setMessage(`Uploading ${i + 1} of ${files.length}…`);
+
+        if (isVideoFile(file)) {
+          // Videos bypass the ~4.5MB serverless limit by uploading directly to
+          // Blob from the browser.
+          const blob = await upload(file.name, file, {
+            access: "public",
+            handleUploadUrl: "/api/blob/client-upload",
+          });
+          uploadedUrls.push(blob.url);
+        } else {
+          const uploadData = new FormData();
+          uploadData.append("file", file);
+          const uploadRes = await fetch("/api/blob/upload", {
+            method: "POST",
+            body: uploadData,
+          });
+          if (!uploadRes.ok) {
+            const data = (await uploadRes.json().catch(() => ({}))) as {
+              error?: string;
+            };
+            throw new Error(data.error ?? `Failed to upload ${file.name}.`);
+          }
+          const blob = (await uploadRes.json()) as { url: string };
+          uploadedUrls.push(blob.url);
         }
-        const blob = (await uploadRes.json()) as { url: string };
-        uploadedUrls.push(blob.url);
       }
 
       const images = [...existingImages, ...uploadedUrls];
@@ -146,18 +159,28 @@ export default function ProjectForm({ project }: { project?: Project }) {
 
       {existingImages.length > 0 && (
         <div>
-          <label>Current images</label>
+          <label>Current media</label>
           <div className={styles.thumbGrid}>
             {existingImages.map((url) => (
               <div key={url} className={styles.thumb}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={url} alt="" className={styles.thumbImg} />
+                {isVideoUrl(url) ? (
+                  <video
+                    src={url}
+                    className={styles.thumbImg}
+                    muted
+                    playsInline
+                    preload="metadata"
+                  />
+                ) : (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={url} alt="" className={styles.thumbImg} />
+                )}
                 <button
                   type="button"
                   className={styles.thumbRemove}
                   onClick={() => removeExistingImage(url)}
                   disabled={working}
-                  aria-label="Remove image"
+                  aria-label="Remove media"
                 >
                   ×
                 </button>
@@ -169,12 +192,12 @@ export default function ProjectForm({ project }: { project?: Project }) {
 
       <div>
         <label htmlFor="images">
-          {isEdit ? "Add images" : "Images"}
+          {isEdit ? "Add media" : "Media (images and mp4 video)"}
         </label>
         <input
           id="images"
           type="file"
-          accept="image/*"
+          accept="image/*,video/mp4,video/webm,video/quicktime"
           multiple
           disabled={working}
           onChange={(e) => setFiles(Array.from(e.target.files ?? []))}
