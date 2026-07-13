@@ -16,11 +16,6 @@
   font-size: 1.1rem;
 }
 
-.inlineLink {
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
 .grid {
   list-style: none;
   margin: 0;
@@ -42,7 +37,6 @@
   position: relative;
   width: 100%;
   aspect-ratio: 580 / 433;
-  /* aspect-ratio: 433 / 580; */
   overflow: hidden;
   background: #e7e4dd;
 }

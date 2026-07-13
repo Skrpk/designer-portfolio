@@ -1,0 +1,81 @@
+.wrap {
+  max-width: 46rem;
+  margin: clamp(3rem, 10vw, 7rem) auto clamp(4rem, 10vw, 8rem);
+}
+
+.kicker {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+  margin-bottom: 1.25rem;
+}
+
+.title {
+  font-size: clamp(2rem, 6vw, 3.75rem);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.lead {
+  margin-top: 1.75rem;
+  font-size: clamp(1.15rem, 2.2vw, 1.5rem);
+  line-height: 1.5;
+  color: #2c2b25;
+}
+
+.body {
+  margin-top: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: #3a382f;
+}
+
+.sectionTitle {
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.defs {
+  margin: 0;
+  border-top: 1px solid var(--line);
+}
+
+.defRow {
+  display: grid;
+  grid-template-columns: 12rem 1fr;
+  gap: 1rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.defTerm {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+}
+
+.defVal {
+  font-size: 1.05rem;
+  color: #2c2b25;
+}
+
+.defVal a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (max-width: 640px) {
+  .defRow {
+    grid-template-columns: 1fr;
+    gap: 0.25rem;
+  }
+}
