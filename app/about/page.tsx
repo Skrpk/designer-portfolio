@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import styles from "../content.module.css";
 
 export const metadata: Metadata = {
@@ -11,6 +12,17 @@ export default function AboutPage() {
     <div className="container">
       <article className={styles.wrap}>
         <p className={styles.kicker}>About me</p>
+
+        <Image
+          src="/avatar.jpg"
+          alt="Anastasiia Skrypka"
+          width={853}
+          height={1280}
+          className={styles.portraitImg}
+          sizes="(max-width: 640px) 60vw, 18rem"
+          priority
+        />
+
         <h1 className={styles.title}>Anastasiia Skrypka</h1>
 
         <p className={styles.lead}>

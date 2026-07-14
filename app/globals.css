@@ -5,7 +5,7 @@
   --line: #d9d6cf;
   --accent: #14130f;
   --maxw: 1800px;
-  --minw: 1200px;
+  --minw: 1400px;
   --pad: clamp(1.25rem, 4vw, 4rem);
   --font: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
@@ -33,6 +33,28 @@ body {
 a {
   color: inherit;
   text-decoration: none;
+}
+
+/* Site-wide animated underline on hover for textual links.
+   Excludes the logo, buttons, and image/card links. */
+a:not(.brand):not(.btn):not(.btn-secondary):not(.cardLink) {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0% 1px;
+  transition: background-size 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    color 0.25s ease;
+}
+
+a:not(.brand):not(.btn):not(.btn-secondary):not(.cardLink):hover,
+a:not(.brand):not(.btn):not(.btn-secondary):not(.cardLink):focus-visible {
+  background-size: 100% 1px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  a:not(.brand):not(.btn):not(.btn-secondary):not(.cardLink) {
+    transition: none;
+  }
 }
 
 img {

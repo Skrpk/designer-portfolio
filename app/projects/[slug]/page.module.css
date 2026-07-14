@@ -31,21 +31,17 @@
   white-space: pre-wrap;
 }
 
-.gallery {
+.videos {
   display: flex;
   flex-direction: column;
   gap: clamp(1rem, 3vw, 2.5rem);
+  margin-top: clamp(0.75rem, 1.5vw, 1.5rem);
   padding-bottom: 2rem;
 }
 
-.imageWrap {
+.videoWrap {
   width: 100%;
   background: #e7e4dd;
-}
-
-.image {
-  width: 100%;
-  height: auto;
 }
 
 .video {

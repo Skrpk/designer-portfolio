@@ -1,10 +1,10 @@
 import { cookies } from "next/headers";
 import { notFound, redirect } from "next/navigation";
 import Link from "next/link";
-import Image from "next/image";
 import { getProjectBySlug } from "@/lib/projects";
 import { SESSION_COOKIE, verifySessionValue } from "@/lib/auth";
 import { isVideoUrl } from "@/lib/media";
+import ImageGallery from "./ImageGallery";
 import styles from "./page.module.css";
 
 export const dynamic = "force-dynamic";
@@ -30,6 +30,9 @@ export default async function ProjectPage({
     }
   }
 
+  const images = project.images.filter((src) => !isVideoUrl(src));
+  const videos = project.images.filter((src) => isVideoUrl(src));
+
   return (
     <article className="container-small">
       <Link href="/" className={styles.back}>
@@ -43,33 +46,23 @@ export default async function ProjectPage({
         )}
       </header>
 
-      {project.images.length > 0 && (
-        <div className={styles.gallery}>
-          {project.images.map((src, i) =>
-            isVideoUrl(src) ? (
-              <div key={src} className={styles.imageWrap}>
-                <video
-                  src={src}
-                  className={styles.video}
-                  controls
-                  playsInline
-                  preload="metadata"
-                />
-              </div>
-            ) : (
-              <div key={src} className={styles.imageWrap}>
-                <Image
-                  src={src}
-                  alt={`${project.name} — image ${i + 1}`}
-                  width={1600}
-                  height={1066}
-                  className={styles.image}
-                  sizes="(max-width: 768px) 100vw, 1200px"
-                  priority={i === 0}
-                />
-              </div>
-            )
-          )}
+      {images.length > 0 && (
+        <ImageGallery images={images} projectName={project.name} />
+      )}
+
+      {videos.length > 0 && (
+        <div className={styles.videos}>
+          {videos.map((src) => (
+            <div key={src} className={styles.videoWrap}>
+              <video
+                src={src}
+                className={styles.video}
+                controls
+                playsInline
+                preload="metadata"
+              />
+            </div>
+          ))}
         </div>
       )}
     </article>
