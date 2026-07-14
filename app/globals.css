@@ -5,6 +5,7 @@
   --line: #d9d6cf;
   --accent: #14130f;
   --maxw: 1800px;
+  --minw: 1400px;
   --pad: clamp(1.25rem, 4vw, 4rem);
   --font: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
@@ -50,6 +51,14 @@ p {
 .container {
   width: 100%;
   max-width: var(--maxw);
+  margin: 0 auto;
+  padding-left: var(--pad);
+  padding-right: var(--pad);
+}
+
+.container-small {
+  width: 100%;
+  max-width: var(--minw);
   margin: 0 auto;
   padding-left: var(--pad);
   padding-right: var(--pad);

@@ -31,7 +31,7 @@ export default async function ProjectPage({
   }
 
   return (
-    <article className="container">
+    <article className="container-small">
       <Link href="/" className={styles.back}>
         &larr; Back to work
       </Link>
