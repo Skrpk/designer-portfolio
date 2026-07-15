@@ -49,14 +49,6 @@ export default function AboutPage() {
             light, and every detail that turns a space into an experience.
           </p>
         </div>
-
-        <h2 className={styles.sectionTitle}>Selected recognition</h2>
-        <div className={styles.body}>
-          <p>
-            Featured in Dezeen and Architectural Digest · Shortlisted, Interior
-            Design Awards 2024 · Guest lecturer at the School of Design.
-          </p>
-        </div>
       </article>
     </div>
   );
