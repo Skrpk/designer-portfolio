@@ -26,27 +26,27 @@ export default function AboutPage() {
         <h1 className={styles.title}>Anastasiia Skrypka</h1>
 
         <p className={styles.lead}>
-          Interior designer crafting calm, considered spaces where light,
-          material, and proportion work in quiet harmony.
+          I believe every space has a story to tell. As an Interior Designer
+          with 14 years of international experience—including 11 years in
+          Ukraine and 3 years in Dubai—I create interiors that balance
+          aesthetics, functionality, and the way people truly live and work.
         </p>
 
         <div className={styles.body}>
           <p>
-            With over a decade of practice across residential and commercial
-            projects, my work is rooted in the belief that good design is felt
-            before it is seen. Every room begins with how people move, rest, and
-            gather — and grows from there into something both functional and
-            timeless.
+            My portfolio includes residential, commercial, hospitality, and
+            workplace projects, each shaped by its own context, culture, and
+            purpose. I enjoy transforming ideas into thoughtfully designed
+            environments, guiding every stage of the process—from the first
+            concept, mood boards, and material selection to technical
+            documentation, site coordination, and final execution.
           </p>
           <p>
-            I work closely with a trusted network of craftspeople and suppliers,
-            selecting natural materials and honest finishes that age gracefully.
-            The result is interiors that feel personal, unhurried, and made to
-            last.
-          </p>
-          <p>
-            From first sketch to final styling, I stay hands-on — because the
-            details are where a space truly comes alive.
+            For me, interior design is about more than creating beautiful
+            spaces. It is about understanding people, solving problems through
+            design, and crafting interiors that feel timeless, authentic, and
+            effortless. I pay close attention to proportions, materials, natural
+            light, and every detail that turns a space into an experience.
           </p>
         </div>
 
