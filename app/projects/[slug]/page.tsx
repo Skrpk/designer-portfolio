@@ -32,10 +32,11 @@ export default async function ProjectPage({
 
   const images = project.images.filter((src) => !isVideoUrl(src));
   const videos = project.images.filter((src) => isVideoUrl(src));
+  const backHref = project.visibility === "private" ? "/private" : "/";
 
   return (
     <article className="container-small">
-      <Link href="/" className={styles.back}>
+      <Link href={backHref} className={styles.back}>
         &larr; Back to work
       </Link>
 
