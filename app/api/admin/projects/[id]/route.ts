@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { revalidatePath } from "next/cache";
 import {
   deleteProject,
+  getProjectById,
   updateProject,
   type Visibility,
 } from "@/lib/projects";
@@ -44,6 +45,7 @@ export async function PUT(
   }
 
   try {
+    const existing = await getProjectById(id);
     const project = await updateProject(id, {
       name,
       description,
@@ -59,7 +61,11 @@ export async function PUT(
     }
 
     revalidatePath("/");
+    revalidatePath("/private");
     revalidatePath(`/projects/${project.slug}`);
+    if (existing && existing.slug !== project.slug) {
+      revalidatePath(`/projects/${existing.slug}`);
+    }
 
     return NextResponse.json({ slug: project.slug });
   } catch (error) {

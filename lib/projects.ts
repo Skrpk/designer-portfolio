@@ -134,14 +134,27 @@ export async function updateProject(
   if (index === -1) return null;
 
   const current = projects[index];
+  const trimmedName = input.name.trim();
 
   const removedImages = current.images.filter(
     (url) => !input.images.includes(url)
   );
 
+  let slug = current.slug;
+  if (trimmedName !== current.name) {
+    const taken = new Set(
+      projects.filter((p) => p.id !== id).map((p) => p.slug)
+    );
+    slug = slugify(trimmedName) || "project";
+    if (taken.has(slug)) {
+      slug = `${slug}-${shortId()}`;
+    }
+  }
+
   const updated: Project = {
     ...current,
-    name: input.name.trim(),
+    name: trimmedName,
+    slug,
     description: input.description.trim(),
     visibility: input.visibility,
     images: input.images,
