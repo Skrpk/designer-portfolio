@@ -121,6 +121,23 @@ p {
   color: var(--fg);
 }
 
+@media (max-width: 640px) {
+  .site-header {
+    padding: 0.75rem var(--pad);
+    gap: 0.75rem;
+  }
+
+  .site-header .brand-logo {
+    height: 2.5rem;
+  }
+
+  .site-header nav {
+    gap: 0.65rem;
+    font-size: 0.65rem;
+    letter-spacing: 0.04em;
+  }
+}
+
 .site-footer {
   padding: 3rem var(--pad);
   margin-top: 4rem;
