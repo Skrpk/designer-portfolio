@@ -2,41 +2,17 @@ import type { Metadata } from "next";
 import styles from "../content.module.css";
 
 export const metadata: Metadata = {
-  title: "Information — Studio",
-  description: "Services, process, and contact information.",
+  title: "Contact Me — Studio",
+  description: "Get in touch with Anastasiia Skrypka.",
 };
 
-export default function InformationPage() {
+export default function ContactPage() {
   return (
     <div className="container">
       <article className={styles.wrap}>
-        <p className={styles.kicker}>Information</p>
-        <h1 className={styles.title}>Studio &amp; services</h1>
+        <p className={styles.kicker}>Contact</p>
+        <h1 className={styles.title}>Contact me</h1>
 
-        <p className={styles.lead}>
-          A full-service interior design studio working on residential,
-          hospitality, and workspace projects worldwide.
-        </p>
-
-        <h2 className={styles.sectionTitle}>Services</h2>
-        <div className={styles.body}>
-          <p>
-            Interior architecture · Space planning · Furniture, fixtures &amp;
-            equipment · Material and finish selection · Custom joinery ·
-            Styling and art direction · Project management.
-          </p>
-        </div>
-
-        <h2 className={styles.sectionTitle}>Process</h2>
-        <div className={styles.body}>
-          <p>
-            1. Discovery &amp; brief — 2. Concept &amp; mood — 3. Design
-            development — 4. Documentation — 5. Procurement — 6. Delivery &amp;
-            styling.
-          </p>
-        </div>
-
-        <h2 className={styles.sectionTitle}>Contact</h2>
         <dl className={styles.defs}>
           <div className={styles.defRow}>
             <dt className={styles.defTerm}>Email</dt>

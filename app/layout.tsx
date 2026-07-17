@@ -23,7 +23,7 @@ export default function RootLayout({
           <nav>
             <Link href="/">Work</Link>
             <Link href="/private">Private</Link>
-            <Link href="/information">Information</Link>
+            <Link href="/contact">Contact Me</Link>
             <Link href="/about">About Me</Link>
           </nav>
         </header>

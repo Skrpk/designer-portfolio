@@ -47,7 +47,7 @@ export default async function HomePage() {
           Design Awards 2024
         </p>
         <p className={styles.cta}>
-          <Link href="/information">Start a project</Link>
+          <Link href="/contact">Start a project</Link>
           <span className={styles.ctaSep} aria-hidden="true">
             /
           </span>
