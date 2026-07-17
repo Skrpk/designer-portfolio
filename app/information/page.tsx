@@ -41,34 +41,40 @@ export default function InformationPage() {
           <div className={styles.defRow}>
             <dt className={styles.defTerm}>Email</dt>
             <dd className={styles.defVal}>
-              <a href="mailto:hello@studio.example">hello@studio.example</a>
+              <a href="mailto:skripka.design@gmail.com">
+                skripka.design@gmail.com
+              </a>
             </dd>
           </div>
           <div className={styles.defRow}>
             <dt className={styles.defTerm}>Phone</dt>
-            <dd className={styles.defVal}>+1 (555) 010-2048</dd>
+            <dd className={styles.defVal}>
+              <a href="tel:+380664752398">+380 664752398</a>
+            </dd>
           </div>
           <div className={styles.defRow}>
-            <dt className={styles.defTerm}>Studio</dt>
+            <dt className={styles.defTerm}>LinkedIn</dt>
             <dd className={styles.defVal}>
-              20 De Boers Drive, Suite 4, New York
+              <a
+                href="https://www.linkedin.com/in/anastasia-skrypka-9a2999139/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Anastasia Skrypka
+              </a>
             </dd>
           </div>
           <div className={styles.defRow}>
             <dt className={styles.defTerm}>Instagram</dt>
             <dd className={styles.defVal}>
               <a
-                href="https://instagram.com"
+                href="https://www.instagram.com/skrypka_design?igsh=MWFqaW9nNWMyYWJhcQ=="
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                @studio
+                @skrypka_design
               </a>
             </dd>
-          </div>
-          <div className={styles.defRow}>
-            <dt className={styles.defTerm}>Hours</dt>
-            <dd className={styles.defVal}>Mon–Fri, 9:00–18:00</dd>
           </div>
         </dl>
       </article>

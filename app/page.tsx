@@ -13,7 +13,7 @@ export default async function HomePage() {
     <div className="container">
       <section className={styles.hero} aria-labelledby="home-intro">
         <h1 id="home-intro" className={styles.heroTitle}>
-          Interior design studio shaping calm, considered spaces.
+          Interior Designer creating calm, timeless spaces.
         </h1>
         <p className={styles.heroSub}>
           Selected work · Residential &amp; commercial

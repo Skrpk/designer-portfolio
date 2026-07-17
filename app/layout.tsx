@@ -18,7 +18,7 @@ export default function RootLayout({
         <header className="site-header">
           <Link href="/" className="brand" aria-label="Anastasiia Skrypka — Home">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/logo2.svg" alt="Anastasiia Skrypka" className="brand-logo" />
+            <img src="/icon.svg" alt="Anastasiia Skrypka" className="brand-logo" />
           </Link>
           <nav>
             <Link href="/">Work</Link>

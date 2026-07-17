@@ -34,13 +34,18 @@
 .videos {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: clamp(1rem, 3vw, 2.5rem);
-  margin-top: clamp(0.75rem, 1.5vw, 1.5rem);
+  margin-top: clamp(1.5rem, 3vw, 2.5rem);
   padding-bottom: 2rem;
 }
 
 .videoWrap {
   width: 100%;
+  max-width: 42rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background: #e7e4dd;
 }
 
@@ -48,4 +53,6 @@
   display: block;
   width: 100%;
   height: auto;
+  max-height: min(70vh, 32rem);
+  object-fit: contain;
 }
